@@ -17,8 +17,17 @@ export function TaskList() {
   function generateUniqueId() {
     const maxIdNumberRange = 0x10000000;
 
-    // Create random number
-    return Math.floor((1 + Math.random()) * maxIdNumberRange);
+    let id = Math.floor((1 + Math.random()) * maxIdNumberRange);
+
+    const taskWithSameId = tasks.find((task) => task.id === id);
+
+    // Generate another id in case of existent id
+    if (taskWithSameId) {
+      console.log("ué");
+      id = generateUniqueId();
+    }
+
+    return id;
   }
 
   function handleCreateNewTask() {
