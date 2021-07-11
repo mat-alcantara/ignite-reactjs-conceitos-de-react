@@ -15,15 +15,14 @@ export function TaskList() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
   function generateUniqueId() {
-    const maxIdNumberRange = 0x10000000;
+    const maxIdNumberRange = Math.pow(10, 10);
 
-    let id = Math.floor((1 + Math.random()) * maxIdNumberRange);
+    let id = Math.floor(Math.random() * maxIdNumberRange);
 
     const taskWithSameId = tasks.find((task) => task.id === id);
 
     // Generate another id in case of existent id
     if (taskWithSameId) {
-      console.log("ué");
       id = generateUniqueId();
     }
 
@@ -31,8 +30,6 @@ export function TaskList() {
   }
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
-
     if (newTaskTitle) {
       setTasks((prevValue) => [
         ...prevValue,
@@ -42,11 +39,12 @@ export function TaskList() {
           isComplete: false,
         },
       ]);
+
+      setNewTaskTitle("");
     }
   }
 
   function handleToggleTaskCompletion(id: number) {
-    // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
     const allTasks = [...tasks];
 
     allTasks.forEach((task) => {
@@ -61,7 +59,6 @@ export function TaskList() {
   }
 
   function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
     const tasksFiltered = tasks.filter((task) => task.id !== id);
 
     setTasks([...tasksFiltered]);
